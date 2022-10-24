@@ -26,3 +26,5 @@ const port = 12306;
 app.listen(port, (error) => {
   console.log(`server running on ${port}`);
 });
+
+module.exports = app;
