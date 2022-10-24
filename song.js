@@ -10,7 +10,6 @@ const findSong = (str) => {
   const content = $("script:eq(2)").html();
   const prefix = "window.__DATA__ = ";
   const res = content.substring(prefix.length, content.length - 2);
-  console.log(JSON.parse(res))
   return JSON.parse(res).detail.playurl;
 };
 

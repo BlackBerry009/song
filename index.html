@@ -7,7 +7,15 @@
     <title>Document</title>
   </head>
   <body>
-    <button id="btn">下载</button>
+    <div>
+      <img width="200px" src="./song.jpg" alt="" />
+      从这里复制链接到下面的输入框里面去！然后点击下载，最多 5s...
+    </div>
+    <hr />
+    <div style="margin-top: 20px">
+      <input id="input" type="text" placeholder="这里粘贴你的全民 k 歌链接" />
+    </div>
+    <div style="margin-top: 20px"><button id="btn">下载</button></div>
 
     <script>
       function download(href, title) {
@@ -40,12 +48,29 @@
         });
       };
 
-      const SONG_URL =
-        "http://tx.stream.kg.qq.com/gzc-kgsvp/gzc_0_50111_1021_050e9be8b4a07c96547e47ef80f98afc558114af.f0.m4a?vkey=B087958198896F8FDE399170A2E40F0815314AC4BD791B2B569FCF72B90A4E3E304384E9A828FA8A415608CE4F51D41BB8A673D03B29C647D3B9A14DDDDBA8D20243FB09D71C00593C63ADF93633720B0A647C987D0F0205&dis_k=c408612f43da33329a74e3a8d2ed8435&dis_t=1666434940&fromtag=1021&sdtfrom=v1021&ugcid=763084193_1563861848_271";
+      async function getVideoUrl() {
+        const inputValue = document.getElementById("input").value;
 
+        try {
+          const t = await fetch(
+            `https://song-beryl.vercel.app/getSongUrl?url=${inputValue}`
+          );
+          const res = await t.json();
+          return res.url;
+        } catch (error) {
+            alert('卧槽，下载链接是不是没填对')
+            
+        }
+      }
       const btn = document.getElementById("btn");
-      btn.onclick = () => {
-        downloadVideo(SONG_URL);
+      btn.onclick = async () => {
+        const url = await getVideoUrl();
+        console.log(url);
+        if (!url) {
+          alert("卧槽，下载出错了");
+          return;
+        }
+        downloadVideo(url);
       };
     </script>
   </body>
