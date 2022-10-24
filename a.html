@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">下载</button>
+
+    <script>
+      function download(href, title) {
+        const a = document.createElement("a");
+        a.setAttribute("href", href);
+        a.setAttribute("download", title);
+        a.click();
+      }
+      const downloadVideo = (url) => {
+        fetch(url).then(function (response) {
+          response.arrayBuffer().then((res) => {
+            let type = "audio/*"; // 资源类型
+            /* 常见资源类型
+          1.excel: type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          2.图片: type = "image/*"
+          3.视频: type = "video/*"
+          4.音频: type = "audio/*"
+        */
+            let blob = new Blob([res], { type: type });
+            // 获取的blob根据实际业务场景应用下载，或转化成其他格式的资源
+            var objectUrl = URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style.display = "none";
+            a.href = objectUrl;
+            a.setAttribute("download", "这是你下载的mp3.mp3");
+            a.click();
+            document.body.removeChild(a);
+          });
+        });
+      };
+
+      const SONG_URL =
+        "http://tx.stream.kg.qq.com/gzc-kgsvp/gzc_0_50111_1021_050e9be8b4a07c96547e47ef80f98afc558114af.f0.m4a?vkey=B087958198896F8FDE399170A2E40F0815314AC4BD791B2B569FCF72B90A4E3E304384E9A828FA8A415608CE4F51D41BB8A673D03B29C647D3B9A14DDDDBA8D20243FB09D71C00593C63ADF93633720B0A647C987D0F0205&dis_k=c408612f43da33329a74e3a8d2ed8435&dis_t=1666434940&fromtag=1021&sdtfrom=v1021&ugcid=763084193_1563861848_271";
+
+      const btn = document.getElementById("btn");
+      btn.onclick = () => {
+        downloadVideo(SONG_URL);
+      };
+    </script>
+  </body>
+</html>
