@@ -10,7 +10,9 @@ const findSong = (str) => {
   const content = $("script:eq(2)").html();
   const prefix = "window.__DATA__ = ";
   const res = content.substring(prefix.length, content.length - 2);
-  return JSON.parse(res).detail.playurl;
+  const url = JSON.parse(res).detail.playurl || '';
+  const secureURL = url.replace('http://', 'https://')
+  return secureURL;
 };
 
 const getSongURL = async (url) => {
