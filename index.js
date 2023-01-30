@@ -21,9 +21,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/getSongUrl", async (req, res) => {
-  const songURL = await getSongURL(req.query.url);
+  const {url, singerName, songName} = await getSongURL(req.query.url);
   res.json({
-    url: songURL,
+    url,
+    singerName,
+    songName
   });
 });
 
