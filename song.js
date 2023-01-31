@@ -15,8 +15,9 @@ const getSongURL = async (url) => {
   const res = await axios.get(url);
   if (res.status === 200) {
     const result = findSong(res.data);
+    const url = result?.playurl || ''
     return {
-      url: result?.playurl,
+      url: url.replace('http://', 'https://'),
       singerName: result?.singer_name,
       songName: result?.song_name,
     };
