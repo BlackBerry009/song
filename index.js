@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 
-app.get("/getSongUrl", async (req, res) => {
+app.get("/api/getSongUrl", async (req, res) => {
   const {url, singerName, songName} = await getSongURL(req.query.url);
   res.json({
     url,
