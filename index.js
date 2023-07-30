@@ -1,29 +1,18 @@
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const { getSongURL } = require("./song.js");
+const express = require('express')
+const app = express()
+const bodyParser = require('body-parser')
 const cors = require('cors')
+const song = require('./api/song')
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cors())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(express.json({extend: false}))
 
-app.get("/", (req, res) => {
-  res.send("Express on Vercel");
-});
+app.use('/api/song', song)
 
-app.get("/api/getSongUrl", async (req, res) => {
-  const {url, singerName, songName} = await getSongURL(req.query.url);
-  res.json({
-    url,
-    singerName,
-    songName
-  });
-});
-
-const port = 12306;
+const port = 12306
 app.listen(port, (error) => {
-  console.log(`server running on ${port}`);
-});
+  console.log(`server running on ${port}`)
+})
 
-module.exports = app;
+module.exports = app
